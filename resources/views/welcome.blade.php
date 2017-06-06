@@ -10,6 +10,8 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
+        <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
+
         <!-- Styles -->
         <style>
             html, body {
@@ -81,7 +83,7 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
-
+                <a href="javascript:void(0)" class="btn btn-raised btn-info">Info<div class="ripple-container"></div></a>
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
