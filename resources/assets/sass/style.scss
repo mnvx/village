@@ -1,0 +1,13 @@
+.wrapper, html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.map {
+  flex: 1;
+  display: flex;
+}
