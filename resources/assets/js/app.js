@@ -23,17 +23,34 @@ L.tileLayer(osmTilesUrl, {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
 }).addTo(mymap);
 
-L.polygon([
-    [56.0874326, 36.6100406],
-    [56.0879243, 36.6099735],
-    [56.0880779, 36.6103181],
-    [56.0874442, 36.6104105]
-], memberStyle).addTo(mymap).bindPopup(["Участок 1", "hello world"].join('<br>'));
+$.get('geojson-data', function (response) {
+    let geoJsonData = response;
 
-L.polygon([
-    [56.0875042, 36.6118597],
-    [56.0875145, 36.6120588],
-    [56.0875981, 36.6121368],
-    [56.0881112, 36.6120410],
-    [56.0881584, 36.6117440]
-], memberStyle).addTo(mymap).bindPopup(["Участок 6", "Something is happend!"].join('<br>'));
+    // Преобразуем контуры в полигоны (закрашенные области)
+    for (let i in geoJsonData.features) {
+        if (geoJsonData.features[i].geometry.type !== 'LineString') {
+            continue;
+        }
+        geoJsonData.features[i].geometry.type = 'Polygon';
+        geoJsonData.features[i].geometry.coordinates = [geoJsonData.features[i].geometry.coordinates];
+    }
+
+    // Рисуем на карте полученные полигоны
+    L.geoJson(geoJsonData, {
+        // Стиль полигонов
+        style: {
+            color: 'green',
+            weight: 1,
+        },
+        // Навешиваеми свой попап на каждый полигон
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup([
+                "<b>Участок " + feature.properties['ref'] + '</b>',
+                "Дополнительная информация, приджойненная из Excel"
+            ].join('<br>'));
+        },
+        filter: function (feature, layer) {
+            return feature.properties.ref !== undefined;
+        }
+    }).addTo(mymap);
+});
