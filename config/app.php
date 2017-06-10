@@ -177,6 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        \Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -226,6 +228,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+    ],
+
+    'geojson' => [
+        'raw_file' => database_path(implode(DIRECTORY_SEPARATOR, ['geojson', 'data.geojson'])),
+        'prepared_file' => database_path(implode(DIRECTORY_SEPARATOR, ['geojson', 'data.prepared.geojson'])),
+        'excel_file' => database_path(implode(DIRECTORY_SEPARATOR, ['excel', 'contacts.xlsx'])),
     ],
 
 ];

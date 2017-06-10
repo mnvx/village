@@ -9,7 +9,7 @@ class GeoJsonDataController extends Controller
         return response()
             ->json(
                 json_decode(
-                    file_get_contents(database_path(implode(DIRECTORY_SEPARATOR, ['geojson', 'data.geojson'])))
+                    file_get_contents(config('app.geojson.prepared_file'))
                 )
             );
     }

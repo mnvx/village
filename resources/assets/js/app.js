@@ -24,19 +24,8 @@ L.tileLayer(osmTilesUrl, {
 }).addTo(mymap);
 
 $.get('geojson-data', function (response) {
-    let geoJsonData = response;
-
-    // Преобразуем контуры в полигоны (закрашенные области)
-    for (let i in geoJsonData.features) {
-        if (geoJsonData.features[i].geometry.type !== 'LineString') {
-            continue;
-        }
-        geoJsonData.features[i].geometry.type = 'Polygon';
-        geoJsonData.features[i].geometry.coordinates = [geoJsonData.features[i].geometry.coordinates];
-    }
-
     // Рисуем на карте полученные полигоны
-    L.geoJson(geoJsonData, {
+    L.geoJson(response, {
         // Стиль полигонов
         style: {
             color: 'green',
@@ -44,13 +33,10 @@ $.get('geojson-data', function (response) {
         },
         // Навешиваеми свой попап на каждый полигон
         onEachFeature: function (feature, layer) {
-            layer.bindPopup([
-                "<b>Участок " + feature.properties['ref'] + '</b>',
-                "Дополнительная информация, приджойненная из Excel"
-            ].join('<br>'));
+            layer.bindPopup(feature.properties.data);
         },
         filter: function (feature, layer) {
-            return feature.properties.ref !== undefined;
+            return feature.properties.data !== undefined;
         }
     }).addTo(mymap);
 });
