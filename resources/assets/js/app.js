@@ -13,10 +13,6 @@ let tiliktinoLatLon = [56.0858, 36.612];
 let zoom = 17;
 let mymap = L.map('map').setView(tiliktinoLatLon, zoom);
 let osmTilesUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-let memberStyle = {
-    color: 'green',
-    stroke: false,
-};
 
 L.tileLayer(osmTilesUrl, {
     maxZoom: 19,
