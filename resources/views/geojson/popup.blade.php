@@ -4,7 +4,9 @@
 @foreach ($data as $item)
     <li>{{ $item['name'] }}:
         <ul>
-            <li>Телефон: {!! str_replace(',', '<br/>', $item['phone']) !!}</li>
+            @if ($item['phone'])
+                <li>Телефон: {!! str_replace(',', '<br/>', $item['phone']) !!}</li>
+            @endif
             @if ($item['email'])
                 <li>E-mail: {{ $item['email'] }}</li>
             @endif

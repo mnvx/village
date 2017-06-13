@@ -23,9 +23,12 @@ class PrepareGeoJsonDataCommand extends Command
 
             $resultsByKey = [];
             $results = $reader->get();
-            foreach ($results as $result)
-            {
-                $resultsByKey[$result->number][] = $result->toArray();
+            foreach ($results as $result) {
+                $numbers = explode(',', $result->number);
+                foreach ($numbers as $number)
+                {
+                    $resultsByKey[trim($number)][] = $result->toArray();
+                }
             }
 
             foreach ($geoJson->features as $feature)
@@ -41,7 +44,7 @@ class PrepareGeoJsonDataCommand extends Command
                 if (!empty($resultsByKey[$ref]))
                 {
                     $feature->properties->data = view('geojson/popup', [
-                        'number' => $ref,
+                        'number' => $resultsByKey[$ref][0]['number'],
                         'data' => $resultsByKey[$ref],
                     ])->render();
                 }
