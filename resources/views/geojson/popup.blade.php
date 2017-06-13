@@ -8,7 +8,11 @@
                 <li>Телефон: {!! str_replace(',', '<br/>', $item['phone']) !!}</li>
             @endif
             @if ($item['email'])
-                <li>E-mail: {{ $item['email'] }}</li>
+                <li>E-mail:
+                @foreach (explode(',', $item['email']) as $email)
+                    <a href="mailto:{{ trim($email) }}">{{ $email }}</a>
+                @endforeach
+                </li>
             @endif
         </ul>
     </li>
